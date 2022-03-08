@@ -1,15 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Голосование</title>  
-</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Голосование upread.ru</title>
+
+<!--  Подключаем   jquery    !-->
+<script type="text/javascript" language="javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>  
 <body>
-  <button class="" id="button">Кнопка</button>
-  <p class="out"></p>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="js.js"></script>
-</body>
+<!-- элемент form2 не виден изначально !-->
+<style>
+#form2{
+	display:none;
+}
+</style>
+<div name="form2" id="form2">Вы уже проголосовали.</div>
+
+<!-- форма голосования, обработка производится с помощью скрипта !-->
+<form action="" method="post" name="form1" id="form1">
+Вам нравится наш сайт upread.ru?
+<input type="radio" name="name" value="one" checked/> Да<br />
+<input type="radio" name="name" value="two" /> Нет<br />
+<input name="submit" type="submit" value="Голосовать" onClick="saveform (this.form);return false;">
+</form>
+<div id="enter_name"></div>
+ 
+<!-- функция saveform получает данные из формы и передает их с помощью ajax в файл in.php, а после получения ответа скрывает форму, выводит form2 и показывает алерт с сообщением !-->
+<script type="text/javascript">
+function saveform (data)
+{
+    var name = data.name.value;
+    $.post('in.php',{name:name},function(data){
+        $('#enter_name').html(data);
+    },'json');
+	
+	document.getElementById('form1').style.display="none";
+    document.getElementById('form2').style.display="block";
+	window.alert('Спасибо, ваш голос учтен.');
+}
+</script>
+</body> 
 </html>
